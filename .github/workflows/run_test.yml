@@ -1,6 +1,9 @@
-name: Run Unit Test via Pytest
+name: Run Unit Test via Pytest (Poetry)
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   build:
