@@ -1,4 +1,4 @@
-Feature: Basic XML DataFrame
+Feature: Basic XML DataFrame Read
 
  Scenario: Read XML data with Spark
    Given a spark session
