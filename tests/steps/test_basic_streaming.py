@@ -7,33 +7,14 @@ from src import basic_streaming
 
 scenarios('../features/basic_streaming.feature')
 
-@pytest.fixture(scope="session")
-def spark_context(request):
-    """ fixture for creating a spark context
-    Args:
-        request: pytest.FixtureRequest object
-
-    """
-    conf = (SparkConf().setMaster("local[2]").setAppName("BasicStreaming"))
-    sc = SparkContext(conf=conf)
-    request.addfinalizer(lambda: sc.stop())
-
-    return sc
-
-
-@pytest.fixture(scope="session")
-def streaming_context(spark_context):
-    return StreamingContext(spark_context, 1)
-
-
 @given("a spark streaming context")
-def given_spark_streaming_session(spark_context: SparkContext, streaming_context: StreamingContext):
+def given_spark_streaming_session(spark_context: SparkContext, streaming_context: StreamingContext) -> None:
     pass
 
 
 @when('I provide some a streaming list of multi-dimensional words below',
       target_fixture="input_stream")
-def input_stream(spark_context, streaming_context):
+def input_stream(spark_context: SparkContext, streaming_context: StreamingContext) -> StreamingContext:
     test_input = [
         [
             ' hello spark ',
@@ -48,7 +29,7 @@ def input_stream(spark_context, streaming_context):
 
 
 @then("I expect the streaming words to display array of unique word count")
-def assert_streaming_word_count(input_stream, streaming_context):
+def assert_streaming_word_count(input_stream: list, streaming_context: StreamingContext) -> None:
     tally = basic_streaming.do_streaming_word_counts(input_stream)
     results = basic_streaming.collect_helper(streaming_context, tally, 2, True)
 

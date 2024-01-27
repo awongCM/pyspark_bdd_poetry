@@ -15,7 +15,7 @@ def do_streaming_word_counts(lines):
     return counts_stream
 
 
-def make_dstream_helper(sc: SparkContext, ssc: StreamingContext, test_input):
+def make_dstream_helper(sc: SparkContext, ssc: StreamingContext, test_input) -> StreamingContext:
     """ make dstream from input
     Args:
         test_input: list of lists of input rdd data
