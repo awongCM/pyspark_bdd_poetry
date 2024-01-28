@@ -30,6 +30,8 @@ def spark_context(request) -> SparkContext:
 
     """
     conf = (SparkConf().setMaster("local[2]").setAppName("BasicStreaming"))
+
+    # FYI -> https://stackoverflow.com/questions/46351951/valueerror-cannot-run-multiple-sparkcontexts-at-once-in-spark-with-pyspark
     sc = SparkContext.getOrCreate(conf=conf)
     request.addfinalizer(lambda: sc.stop())
 
