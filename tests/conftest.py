@@ -30,7 +30,7 @@ def spark_context(request) -> SparkContext:
 
     """
     conf = (SparkConf().setMaster("local[2]").setAppName("BasicStreaming"))
-    sc = SparkContext(conf=conf)
+    sc = SparkContext.getOrCreate(conf=conf)
     request.addfinalizer(lambda: sc.stop())
 
     return sc
