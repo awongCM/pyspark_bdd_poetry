@@ -2,6 +2,7 @@ from pyspark.sql import SparkSession, DataFrame
 from pyspark.sql.functions import *
 from pyspark.sql.types import *
 
+
 def read_xml_to_dataframe(spark: SparkSession, rowTag: str, inferSchema: bool, xmlFile: str) -> DataFrame:
     return spark.read \
         .format('com.databricks.spark.xml') \
@@ -11,3 +12,8 @@ def read_xml_to_dataframe(spark: SparkSession, rowTag: str, inferSchema: bool, x
 
 def get_total_row_count(dataFrame: DataFrame):
     return dataFrame.count()
+
+
+def convert_to_lower_case(dataFrame: DataFrame) -> DataFrame:
+    df = dataFrame.withColumn("name", lower(dataFrame["name"]))
+    return df
