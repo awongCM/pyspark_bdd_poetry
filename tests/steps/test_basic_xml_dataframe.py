@@ -48,3 +48,18 @@ def complete_xml_data_assertion(spark:SparkSession, dataframe: DataFrame) -> Non
     expectedRowCount = expected_df.count()
     actualRowCount = basic_xml_dataframe.get_total_row_count(actual_df)
     assert actualRowCount == expectedRowCount
+
+
+@then(parsers.parse("It gets transformed with its name column as lower-case characters"))
+def complete_json_data_transformation_assertion(spark: SparkSession, dataframe: DataFrame) -> None:
+    data = [(1, "john"), (2, "jane"), (3, "jim")]
+    schema = StructType([
+        StructField("id", StringType(), True),
+        StructField("name", StringType(), True)
+    ])
+
+    expected_df = spark.createDataFrame(data, schema=schema)
+
+    actual_df = basic_xml_dataframe.convert_to_lower_case(dataframe)
+
+    assertDataFrameEqual(actual_df, expected_df)
