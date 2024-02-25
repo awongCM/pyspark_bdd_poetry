@@ -7,3 +7,4 @@ venv/
 *.ruff_cache
 .coverage
 .idea/
+.DS_Store
